@@ -17,21 +17,34 @@
     <q-page-container>
       <div v-for="student in students" :key="student">
         <fieldset style="margin: 20px">
-          <q-input v-model="student.fio" label="ФИО" />
-          <q-input v-model="student.birth_date" label="Дата рождения" />
-          <q-input v-model="student.education" label="Образование" />
-          <q-input v-model="student.telephone" label="Номер телефона" />
+          <legend style="padding-right: 5px; padding-left: 5px">Карточка студента</legend>
+          <div class="row">
+            <q-input v-model="student.fio" label="ФИО" class="col" style="margin-right: 20px"/>
+            <q-input v-model="student.birth_date" label="Дата рождения" class="col" style="margin-right: 20px"/>
+            <q-input v-model="student.telephone" label="Номер телефона" class="col" style="margin-right: 20px"/>
+          </div>
+
+<!--          <q-input v-model="student.education" label="Образование" />-->
+          <q-select v-model="student.education" :options="educations" label="Образование" />
           <q-input v-model="student.address" label="Место жительства" />
-          <q-input v-model="student.fuc" label="Факультет" />
-          <q-input v-model="student.course" label="Курс" />
+          <div class="row">
+            <q-input v-model="student.fuc" label="Факультет" class="col" style="margin-right: 20px"/>
+            <q-input v-model="student.spec" label="Специальность" class="col" style="margin-right: 20px"/>
+            <q-input v-model="student.course" label="Курс" class="col" style="margin-right: 20px"/>
+          </div>
+
         </fieldset>
         <br>
       </div>
 
-      <div style="padding-left: 20px">
-      <q-btn icon="add" @click="students.push(Object.create(student))"/>
-      <q-btn @click="generate">Сгенерировать</q-btn>
+
+      <div class="q-pa-md">
+        <q-btn-group spread>
+          <q-btn color="purple" icon="add" @click="students.push(Object.create(student))" label="Добавить студента"/>
+          <q-btn color="purple" icon="settings" @click="generate" label="Сгенерировать документ"/>
+        </q-btn-group>
       </div>
+
     </q-page-container>
   </q-layout>
 </template>
@@ -61,6 +74,7 @@ export default defineComponent({
             telephone: '',
             address: '',
             fuc: '',
+            spec: '',
             course: '',
           }
       ],
@@ -71,8 +85,10 @@ export default defineComponent({
         telephone: '',
         address: '',
         fuc: '',
+        spec: '',
         course: '',
-      }
+      },
+      educations: ['Среднее','Среднее-профессиональное','Высшее']
     }
   },
   methods: {
@@ -167,6 +183,7 @@ export default defineComponent({
             new Paragraph({text: `Дата рождения ${this.students[i].birth_date}`, heading: HeadingLevel.HEADING_3}),
             new Paragraph({text: `Образование ${this.students[i].education}`, heading: HeadingLevel.HEADING_3}),
             new Paragraph({text: `Факультет ${this.students[i].fuc}`, heading: HeadingLevel.HEADING_3}),
+            new Paragraph({text: `Специальность ${this.students[i].spec}`, heading: HeadingLevel.HEADING_3}),
             new Paragraph({text: `Курс ${this.students[i].course}`, heading: HeadingLevel.HEADING_3}),
             // new Paragraph({
             //   text:
